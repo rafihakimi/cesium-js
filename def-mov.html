@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+
+  <!-- Include the CesiumJS JavaScript and CSS files -->
+
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.112/Build/Cesium/Cesium.js"></script>
+
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.112/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cesiumjs.org/Cesium/Build/Apps/Sandcastle/templates/bucket.css">
+  <script src = "https://sandcastle.cesium.com/Sandcastle-header.js"></script>
+
+</head>
+
+<body>
+
+  <div id="cesiumContainer"></div>
+  <script type="module">
+    
+
+     // Replace number below with buildingID of your uploaded model on cesium ion at: https://ion.cesium.com/assets
+     const buildingID= 2388139;
+    // Your access token can be found at: https://ion.cesium.com/tokens.
+    // Replace `your_access_token` with your Cesium ion access token.
+
+    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmNGNhNDc4OS1hZmI1LTQ4ZDgtOTY5YS0wMDVlY2Y5ZmU2MmIiLCJpZCI6MTgzNDAwLCJpYXQiOjE3MDIwODE3MjJ9.rp0BXJgLMUn4OzKJjmk4bNJ5b5QVkGk8bUFuRKQ7RKw';
+
+    // Initialize the Cesium Viewer in the HTML element with the `cesiumContainer` ID.
+    const viewer = new Cesium.Viewer('cesiumContainer', {
+      terrain: Cesium.Terrain.fromWorldTerrain(),
+    });    
+
+    // Add the 3D Tileset you created from your Cesium ion account.
+    const newBuildingTileset = await Cesium.Cesium3DTileset.fromIonAssetId(buildingID);
+    viewer.scene.primitives.add(newBuildingTileset);
+
+    // Fly the camera to Denver, Colorado at the given longitude, latitude, and height.
+viewer.camera.flyTo({
+  destination: Cesium.Cartesian3.fromDegrees(110.37759058476837, -7.771627893753711, 400) 
+});
+
+// Add Cesium OSM Buildings.
+const buildingsTileset = await Cesium.createOsmBuildingsAsync();
+viewer.scene.primitives.add(buildingsTileset);
+
+ // Replace number below with buildingID of your uploaded model on cesium ion at: https://ion.cesium.com/assets
+ const buildingID2= 2389000;
+
+     // Add the 3D Tileset you created from your Cesium ion account.
+     const newBuildingTileset2 = await Cesium.Cesium3DTileset.fromIonAssetId(buildingID2);
+    viewer.scene.primitives.add(newBuildingTileset2);
+      
+      </script>
+
+    </div>
+
+</body>
+
+</html>
